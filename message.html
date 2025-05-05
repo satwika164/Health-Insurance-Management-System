@@ -1,0 +1,18 @@
+{% include 'links.html' %}
+
+{% if session['role']=='customer'%}
+    {% include 'chead.html' %}
+{% elif session['role']=='insurance company' %}
+    {% include 'ic_head.html'%}
+{% elif session['role']=='hospital'%}
+  {% include 'hospital_head.html'%}
+{% elif session['role']=='admin'%}
+  {% include 'ahead.html'%}
+{% else%}
+    {% include 'head.html'%}
+{% endif%}
+
+<div class="admin-bgr">
+    <div class="title text-center" style="line-height:300px">{{message}}</div>
+</div>
+

@@ -1,0 +1,50 @@
+{% include 'hospital_head.html' %}
+<div class="admin-bgr">
+<div class="p-20">
+    <div class="row">
+        {% for linked_hospital in linked_hospitals %}
+        {% set insurance_policy=get_insurance_policy_by_insurance_policy_id(linked_hospital['insurance_policy_id']) %}
+            {% set insurance_company=get_insurance_company_name_by_insurance_companies_id(insurance_policy['insurance_companies_id']) %}
+                <div class="col-4">
+                    <div class="policy-card p-20 m-20">
+                        <div class="h2 text-center">{{insurance_policy['policy_name']}}</div>
+                        <div class="row1 mt-10 pl-10">
+                            <div class="col-6">Premium amount</div>
+                            <div class="col-6"> Premium cycle in months</div>
+                        </div>
+                        <div class="row1 pl-10">
+                            <div class="col-6 highlight">${{insurance_policy['premium_amount']}}</div>
+                            <div class="col-6 highlight">{{insurance_policy['premium_cycle_in_months']}}</div>
+                        </div>
+                        <div class="text-center mt-10 policy-info">{{insurance_policy['allowed_persons']}} family members are allowed</div>
+                        <div class="text-center mt-5 policy-info highlight"> You can claim upto $ {{insurance_policy['claim_amount']}} </div>
+                        <div class="pl-10"><a href="/linked_hospitals?insurance_policy_id={{insurance_policy['_id']}}">LINKED HOSPITALS</a></div>
+                        <div class="row">
+                            <div class="col-4 ml-10">
+                                Status : {{linked_hospital['status']}}
+                            </div>
+                            <div class="col-3">
+                                {% if linked_hospital['status']=='Requested' %}
+                                    <a href="accept_linked_hospital?linked_hospital_id={{linked_hospital['_id']}}" class="btn btn-accept">Accept</a>
+                                {% endif %}
+                            </div>
+                            <div class="col-3">
+                                {% if linked_hospital['status']=='Requested' %}
+                                    <a href="reject_linked_hospital?linked_hospital_id={{linked_hospital['_id']}}" class="btn btn-reject">Reject</a>
+                                {% endif %}
+                            </div>
+                            <div class="col-3">
+                                {% if linked_hospital['status']=='Accepted' %}
+                                    <a href="enrollments?insurance_policy_id={{linked_hospital['insurance_policy_id']}}" class="btn btn-primary">Enrollments</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="pl-10 mt-5 policy-info">Powered by : {{insurance_company['name']}}</div>
+                        <div class="about-policy pl-10">About Policy : {{insurance_policy['about_policy']}}</div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+</div>
+</div>

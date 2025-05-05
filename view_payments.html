@@ -1,0 +1,37 @@
+{% include 'links.html' %}
+{% if session['role']=='customer'%}
+{% include 'chead.html' %}
+{% elif session['role']=='insurance company'%}
+{% include 'ic_head.html'%}
+{% elif session['role']=='hospital'%}
+  {% include 'hospital_head.html'%}
+{% elif session['role']=='admin'%}
+  {% include 'ahead.html'%}
+{% endif%}
+<div class="admin-bgr">
+    <h3 class="title text-center">Payments</h3>
+        <table class="table" border="1">
+            <thead>
+                <tr>
+                    <th>Premium Amount</th>
+                    <th>Customer Name</th>
+                    <th>Status</th>
+                    <th>Card Holder Name</th>
+                    <th>Card Type</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% set enrollment = get_enrollment_by_enrollment_id(payment['enrollment_id']) %}
+                {% set customer = get_customer_by_customer_id(enrollment['customer_id']) %}
+                <tr>
+                    <td>{{enrollment['premium_amount']}}</td>
+                    <td>{{customer['name']}}</td>
+                    <td>{{payment['status']}}</td>
+                    <td>{{payment['card_holder_name']}}</td>
+                    <td>{{payment['card_type']}}</td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+

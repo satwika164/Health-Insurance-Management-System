@@ -1,0 +1,39 @@
+{% include 'links.html' %}
+{% include 'ahead.html' %}
+<div class="admin-bgr">
+    <h3 class="title text-center">View Insurance Companies</h3>
+        <div class="mt-20">
+            <table class="table" border="1">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            
+                <tbody>
+                    {% for insurance_company in insurance_companies %}
+                    <tr>
+                        <td>{{insurance_company['name']}}</td>
+                        <td>{{insurance_company['email']}}</td>
+                        <td>{{insurance_company['phone']}}</td>
+                        <td>{{insurance_company['address']}},{{insurance_company['city']}},{{insurance_company['state']}}{{insurance_company['zipcode']}}</td>
+                        <td>{{insurance_company['status']}}</td>
+                        <td>
+                            {% if insurance_company['status']=="unauthorized" %}
+                                <a href="/authorized?insurance_company_id={{insurance_company['_id']}}" class="btn btn-authorize">authorize</a>
+                            {% else %}
+                                <a href="/unauthorized?insurance_company_id={{insurance_company['_id']}}" class="btn btn-danger">unauthorize</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            
+            </table>
+        </div>
+</div>

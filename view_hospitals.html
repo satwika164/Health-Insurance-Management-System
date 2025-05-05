@@ -1,0 +1,39 @@
+{% include 'ahead.html' %}
+
+<div class="admin-bgr">
+<h3 class="title text-center">Hospitals List</h3>
+
+<table class="table" border="1">
+    <thead>
+        <tr>
+            <th>Hospital name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Image</th>
+            <th>Address</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for hospital in hospitals %}
+        <tr>
+            <td>{{hospital['hospital_name']}}</td>
+            <td>{{hospital['email']}}</td>
+            <td>{{hospital['phone']}}</td>
+            <td><img src="../static/hospital_images/{{hospital['hospital_images']}}" style="height:100px"></td>
+            <td>{{hospital['address']}},{{hospital['city']}},{{hospital['state']}},{{hospital['zipcode']}}</td>
+            <td>{{hospital['status']}}</td>
+            <td>
+                {% if hospital['status'] == "unverified" %}
+                    <a href="/verified?hospital_id={{hospital['_id']}}" class="btn btn-verify">verify</a>
+                {% else %}
+                    <a href="/unverified?hospital_id={{hospital['_id']}}" class="btn btn-danger">unverify</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>

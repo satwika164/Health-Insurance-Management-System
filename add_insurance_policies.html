@@ -1,0 +1,82 @@
+{% include 'ic_head.html' %}
+<div class="admin-bgr">
+<div class="row">
+  <div class="col-4"></div>
+  <div class="col-4">
+    <div class="card mt-10">
+      <h3 class="title text-center">Add Insurance Policy</h3>
+    
+      <form action="add_insurance_policies_action" method="post" enctype="multipart/form-data">
+    
+        <div class="p-3">
+          <label for="policy_name">Policy name:</label>
+          <div class="form-group">
+            <input type="text" name="policy_name" id="policy_name" class="form-control" placeholder=" policy name" required>
+          </div>
+        </div>
+    
+        <div class="p-3">
+          <label for="premium_amount">Premium Amount:</label>
+          <div class="form-group">
+            <input type="number" name="premium_amount" id="premium_amount" class="form-control" placeholder=" premium_amount to be paid">
+          </div>
+        </div>
+    
+        <div class="p-3">
+          <label for="premium_cycle_in_months">Premium Cycle in Months:</label>
+          <div class="form-group">
+            <input type="number" name="premium_cycle_in_months" id="premium_cycle_in_months" class="form-control" placeholder=" premium cycle in months" required>
+          </div>
+        </div>
+    
+        <div class="p-3">
+          <label for="date">Date:</label>
+          <div class="form-group">
+            <input type="date" name="date" id="date" class="form-control" required value="{{date}}">
+          </div>
+        </div>
+    
+        <div class="p-3">
+          <label for="allowed_persons">Allowed Persons:</label>
+          <div class="form-group">
+            <input type="number" name="allowed_persons" id="allowed_persons" class="form-control" placeholder="no.of allowed_persons" required>
+          </div>
+          
+        </div>
+    
+    
+        <div class="p-3">
+          <label for="claim_amount">Claim Amount:</label>
+          <div class="form-group">
+            <input type="number" name="claim_amount" id="claim_amount" class="form-control" placeholder=" claim amount" required>
+          </div>
+          
+        </div>
+    
+        <div class="p-3">
+          <label for="policy_benefits">Policy Benefits:</label>
+          <div class="form-group">
+            <input type="file" name="policy_benefits" id="policy_benefits" class="form-control" placeholder="choose file" required>
+          </div>
+          
+        </div>
+    
+        <div class="p-3">
+          <label for="about_policy">About Policy:</label>
+          <div>
+            <input type="text" name="about_policy" id="about_policy" class="form-control" placeholder="Policy description" required>
+          </div>
+        </div>
+    
+        <div class="p-5">
+          <input type="submit" value="Add Policy" class="btn btn-primary">
+        </div>
+    
+      </form>
+    </div>
+    
+  </div>
+  <div class="col-4"></div>
+</div>
+</div>
+

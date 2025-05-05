@@ -1,0 +1,95 @@
+{% include 'links.html' %}
+
+{% if session['role'] == 'customer' %}
+    {% include 'chead.html' %}
+{% endif %}
+{% if session['role'] == 'insurance company' %}
+    {% include 'ic_head.html' %}
+{% endif %}
+<div class="admin-bgr">
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-1"></div>
+    <div class="col-5">
+        {% if session['role'] == 'insurance company' %}
+            <div class="btn btn-link"><a href="/link_new_hospital?insurance_policy_id={{insurance_policy_id}}">Link New Hospital</a></div>
+        {% endif %}
+    </div>
+    <div class="p-20">
+        <div class="">
+            {% if len(linked_hospitals) !=0 %}
+                <h3 class="title ml-20 ">Accepted Hospitals</h3>
+                <table class="table" border="1" >
+                    <thead>
+                            <tr>
+                                <th>Hospital name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Image</th>
+                                <th>Address</th>
+                            {% if session['role'] == 'insurance company' %}
+                                <th>Status</th>
+                            {% endif %}
+                            </tr>
+                    </thead>
+                    <tbody>
+
+                            {% for linked_hospital in linked_hospitals %}
+                            <tr>
+                            {% set hospital=get_hospitals_by_hospital_id(linked_hospital['hospital_id']) %}
+                                <td>{{hospital['hospital_name']}}</td>
+                                <td>{{hospital['email']}}</td>
+                                <td>{{hospital['phone']}}</td>
+                                <td><img src="../static/hospital_images/{{hospital['hospital_images']}}" style="height:100px"></td>
+                                <td>{{hospital['address']}},{{hospital['city']}},{{hospital['state']}}-{{hospital['zipcode']}}</td>
+                            {% if session['role'] == 'insurance company' %}
+                                <td>{{linked_hospital['status']}}</td>
+                            {% endif %}
+                            </tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="text-center h2">No Hospitals Linked to This Insurance Policy</div>
+            {% endif %}
+        </div>
+        <div class="">
+            {% if session['role'] == 'insurance company' %}
+            {% if len(linked_hospitals2) !=0 %}
+                <h3 class="title ml-20 mt-20">Requested Hospitals</h3>
+                <table class="table" border="1" >
+                    <thead>
+                            <tr>
+                                <th>Hospital name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Image</th>
+                                <th>Address</th>
+                                {% if session['role'] == 'insurance company' %}
+                                    <th>Status</th>
+                                {% endif %}
+                            </tr>
+                    </thead>
+                    <tbody>
+                        {% for linked_hospital in linked_hospitals2 %}
+                        <tr>
+                        {% set hospitals=get_hospitals_by_hospital_id(linked_hospital['hospital_id']) %}
+                            <td>{{hospitals['hospital_name']}}</td>
+                            <td>{{hospitals['email']}}</td>
+                            <td>{{hospitals['phone']}}</td>
+                            <td><img src="../static/hospital_images/{{hospitals['hospital_images']}}" style="height:100px"></td>
+                            <td>{{hospitals['address']}},{{hospitals['city']}},{{hospitals['state']}},{{hospitals['zipcode']}}</td>
+                            <td>{{linked_hospital['status']}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="text-center h2 mt-10">No Active Requests to link hospitals</div>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+

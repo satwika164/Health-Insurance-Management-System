@@ -1,0 +1,106 @@
+{% include 'chead.html' %}
+
+<div class="admin-bgr">
+    <form action="enroll_policy_action" method="post">
+        <div class="row1">
+            <div class="col-6 ml-70">
+                <div class="card mt-50">
+                    <h3 class="title text-center">Policy Enrollment</h3>
+
+                        <div class="p-5">
+                            <label for="date">Date</label>
+                            <div class="form-group">
+                                <input type="date" name="date" id="date" class="form-control" value="{{date}}">
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <label for="start_date">Start Date</label>
+                            <div class="form-group">
+                                <input type="date" name="start_date" id="start_date" class="form-control" required value="{{start_date}}">
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <label for="expire_date">Expiry Date</label>
+                            <div class="form-group">
+                                <input type="date" name="expire_date" id="expire_date"  class="form-control" required value="{{expire_date}}">
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <label for="next_premium_date">Next Premium Date</label>
+                            <div class="form-group">
+                                <input type="date" name="next_premium_date" id="next_premium_date" class="form-control" required value="{{next_premium_date}}">
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card mt-50">
+                    <h3 class="title text-center">Payment Details</h3>
+                        <div>
+                            <input type="hidden" name="insurance_policy_id" value="{{insurance_policy['_id']}}">
+                            <input type="hidden" name="premium_amount" value="{{insurance_policy['premium_amount']}}">
+                        </div>
+
+                        <div class="p-5">
+                            <div style="font-size:18px;font-weight: bold; color:dodgerblue;">Premium Amount :${{insurance_policy['premium_amount']}}</div>
+                        </div>
+
+                        <div class="p-5">
+                            <label for="card_type">Card Type</label>
+                            <div class="form-group">
+                                <select name="card_type" id="card_type" class="form-control" required>
+                                    <option value="debit card">Debit Card</option>
+                                    <option value="credit card">Credit Card</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <label for="card_holder_name">Card Holder Name</label>
+                            <div class="form-group">
+                                <input type="text" name="card_holder_name" id="card_holder_name" class="form-control" placeholder="card holder" required>
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <label for="card_number">Card Number</label>
+                            <div class="form-group">
+                                <input type="text" name="card_number" id="card_number" class="form-control" placeholder="Enter card number" required>
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <label for="cvv">CVV</label>
+                            <div class="form-group">
+                                <input type="text" name="cvv" id="cvv" class="form-control" placeholder="Enter cvv" required>
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <label for="card_expire_date">Card Expiry Date</label>
+                            <div class="form-group">
+                                <input type="month" name="card_expire_date" id="card_expire_date" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <input type="submit" value="Buy Policy" class="btn btn-buypolicy">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+

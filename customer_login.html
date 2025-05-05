@@ -1,0 +1,39 @@
+{% include 'head.html' %}
+<div class="admin-bgr">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="card mt-150 ml-50">
+                <img src="../static/logo.png" class="card-logo">
+                <h3 class="title text-center">Customer Login</h3>
+                    <form action="customer_login_action" method="post">
+                        <div class="p-10">
+                            <div class="form-group">
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required>
+                            </div>
+                        </div>
+                                        
+                                
+
+                        <div class="p-10">
+                            <div class="form-group">
+                                <input type="password" name="password" id="password" class="form-control" placeholder= "Password" required>
+                            </div>
+                        </div>
+                                        
+
+                        <div class="p-10">
+                            <input type="submit" class="btn btn-primary" value="Login">
+                        </div>
+
+                        <h4>New customer?<a href="/customer_registration" class="href">Register Here</a></h4>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+
+            

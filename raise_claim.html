@@ -1,0 +1,76 @@
+{% include 'links.html' %}
+{% include 'chead.html' %}
+<div class="admin-bgr">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="card1 mt-40">
+                <div class="row1">
+                    <div class="col-6">
+                        <form action="raise_claim_action" method="post" enctype="multipart/form-data">
+                            <h3 class="title text-center">Raise Claim</h3>
+                            <div>
+                                <input type="hidden" name="customer_id" value="{{customer_id}}">
+                                <input type="hidden" name="enrollment_id" value="{{enrollment_id}}">
+                            </div>
+                            <div class="p-5">
+                                <label for="hospital_id">Hospital</label>
+                                <div class="form-group">
+                                    <select name="hospital_id" class="form-control">
+                                        {% for linked_hospital in linked_hospitals %}
+                                        {% set hospital=get_hospital_name_by_hospital_id(linked_hospital['hospital_id'])%}
+                                            <option value="{{hospital['_id']}}">{{hospital['hospital_name']}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                            </div>
+        
+                            <div class="p-5">
+                                <label for="billed_amount">Billed Amount</label>
+                                <div class="form-group">
+                                    <input type="number" name="billed_amount" id="billed_amount" class="form-control" required>
+                                </div>
+                            </div>
+        
+                            <div class="p-5">
+                                <label for="insurance_payable_amount">Insurance Pay Amount</label>
+                                <div class="form-group">
+                                    <input type="number" name="insurance_payable_amount" id="insurance_payable_amount" class="form-control" required>
+                                </div>
+                            </div>
+        
+                            <div class="p-5">
+                                <label for="customer_payable_amount">Customer Pay Amount</label>
+                                <div class="form-group">
+                                    <input type="number" name="customer_payable_amount" id="customer_payable_amount" class="form-control" required>
+                                </div>
+                            </div>
+        
+                            <div class="p-5">
+                                <label for="documents">Documents</label>
+                                <div class="form-group">
+                                    <input type="file" name="documents" id="documents" class="form-control" placeholder="choose files" required>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="col-6">
+                        <div class="p-5">
+                            <label for="description">Description</label>
+                            <div class="form-group">
+                                <textarea name="description" id="description" rows="18" class="form-control" required></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="p-5">
+                            <input type="submit" value="Send claim request" class="btn btn-primary">
+                        </div>    
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>

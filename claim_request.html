@@ -1,0 +1,159 @@
+{% include 'links.html' %}
+{% if session['role']=='customer'%}
+{% include 'chead.html' %}
+{% elif session['role']=='insurance company'%}
+{% include 'ic_head.html'%}
+{% elif session['role']=='hospital'%}
+  {% include 'hospital_head.html'%}
+{% elif session['role']=='admin'%}
+  {% include 'ahead.html'%}
+{% else%}
+{% include 'head.html'%}
+{% endif%}
+<div class="admin-bgr">
+<h3 class="title text-center">Claim Request</h3> 
+
+{% for claim in claims %}
+{% set enrollment = get_enrollment_by_enrollment_id(claim['enrollment_id']) %}
+{% set insurance_policy = get_insurance_policy_by_insurance_policy_id(enrollment['insurance_policy_id']) %}
+{% set insurance_company=get_insurance_company_name_by_insurance_companies_id(insurance_policy['insurance_companies_id']) %}
+{% set customer=get_customer_by_customer_id(claim['customer_id'])%}
+    <!-- {{enrollment}}
+    {{insurance_policy}} -->
+
+
+    <div class="card1 p-20">
+        <div class="h3 text-center">{{insurance_policy['policy_name']}}</div>
+        <div class="row1 mt-10 pl-10">
+            <div class="col-6" style="font-size: 20px;">Customer Name : {{customer['name']}}</div>
+             <div class="col-3" style="font-size: 20px;"></div>
+            {% if claim['status']== 'Claim Approved'%}
+            <div class="col-3 h4" style="font-size: 20px;color:green">{{claim['status']}}</div>
+            {% elif claim['status']== 'Claim Rejected'%}
+               <div class="col-3 h4" style="font-size: 20px;color:red">{{claim['status']}}</div>
+            {% else %}
+               <div class="col-3 h4" style="font-size: 20px;">{{claim['status']}}</div>
+            {% endif%}
+
+        </div>
+
+        <div class="row1">
+            {% set insurance_company=get_insurance_company_name_by_insurance_companies_id(insurance_policy['insurance_companies_id']) %}
+
+            <div class="col-4">
+                
+                <div class="row1 mt-10 pl-10">
+                    <div class="col-6">Premium amount</div>
+                    <div class="col-6"> Premium cycle in months</div>
+                </div>
+                <div class="row1 pl-10">
+                    <div class="col-6 highlight">${{insurance_policy['premium_amount']}}</div>
+                    <div class="col-6 highlight">{{insurance_policy['premium_cycle_in_months']}}</div>
+                </div>
+
+                <div class="row1 mt-10 pl-10">
+                    <div class="col-6">Allowed Persons</div>
+                    <div class="col-6">Claim Amount</div>
+                </div>   
+                
+                <div class="row1 pl-10">
+                    <div class="col-6 highlight">{{insurance_policy['allowed_persons']}}</div>
+                    <div class="col-6 highlight">{{insurance_policy['claim_amount']}}</div>
+                </div>
+
+                <div class="row1 mt-10 pl-10">
+                    <div class="col-6">Powered by</div>
+                    <div class="col-6">Policy Benefits</div>
+                </div>
+
+                <div class="row1 pl-10">
+                    <div class="col-6 highlight">{{insurance_company['name']}}</div>
+                    <a href="../static/policy_benefits/{{insurance_policy['policy_benefits']}}">click here</a>
+                </div>
+
+
+            </div>
+            <div class="col-4">
+                <div class="row1 mt-10 pl-10">
+                    <div class="col-6">Start Date</div>
+                    <div class="col-6">Expiry Date</div>
+                </div>
+
+                <div class="row1 pl-10">
+                    <div class="col-6 highlight">{{enrollment['start_date']}}</div>
+                    <div class="col-6 highlight">{{enrollment['expire_date']}}</div>
+                </div>
+
+                <div class="row1 mt-10 pl-10">
+                    <div class="col-6">Enrollment Date</div>
+                    <div class="col-6">Next Premium Date</div>
+                </div>
+
+                <div class="row1 pl-10">
+                    <div class="col-6 highlight">{{enrollment['date']}}</div>
+                    <div class="col-6 highlight">{{enrollment['next_premium_date']}}</div>
+                </div>
+            </div>
+               
+            <div class="col-4">
+                <div class="row1 mt-10 pl-10">
+                    <div class="col-6">Claim Date</div>
+                    <div class="col-6">Billed Amount</div>
+                </div>
+
+                <div class="row1 pl-10">
+                    <div class="col-6 highlight">{{claim['date']}}</div>
+                    <div class="col-6 highlight">{{claim['billed_amount']}}</div>
+                </div>
+
+                <div class="row1 mt-10 pl-10">
+                    <div class="col-6">Insurance Pay Amount</div>
+                    <div class="col-6">Customer Pay Amount</div>
+                </div>
+
+                <div class="row1 pl-10">
+                    <div class="col-6 highlight">{{claim['insurance_payable_amount']}}</div>
+                    <div class="col-6 highlight">{{claim['customer_payable_amount']}}</div>
+                </div>
+
+                <div class="row1 mt-10 pl-10">
+                    <div class="col-6">Documents</div>
+                </div>
+
+                <div class="row1 pl-10">
+                    <div>
+                        <a href="../static/documents/{{claim['documents']}}">click here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row1 mt-10">
+            <div class="pl-10">
+                <div class="mb-5">Description:</div>
+            </div>
+            <div class="pl-10">
+                <div class="">{{claim['description']}}</div>
+            </div>
+        </div>
+        {% if session['role']=='insurance company'%}
+
+        <div class="row1">
+            <div class="col-3"></div>
+            <div class="col-3">
+                {% if claim['status'] == "Claim Request Raised" %}
+                    <a href="/approve_claim_request?claim_request_id={{claim['_id']}}" class="btn btn-approve">Approve</a>
+                {% endif %}
+
+            </div>
+            <div class="col-3">
+                {% if claim['status'] == "Claim Request Raised" %}
+                    <a href="/reject_claim_request?claim_request_id={{claim['_id']}}" class="btn btn-reject-claim">Reject</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif%}
+    </div>
+
+
+{% endfor %}
+</div>

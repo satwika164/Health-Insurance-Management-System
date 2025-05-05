@@ -1,0 +1,47 @@
+{% include 'links.html' %}
+{% if session['role'] == 'customer' %}
+    {% include 'chead.html' %}
+{% endif %}
+{% if session['role'] == 'insurance company' %}
+    {% include 'ic_head.html' %}
+{% endif %}
+
+<div class="admin-bgr">
+<h3 class="title text-center mt-50">Link New Hospital</h3>
+<div class="mt-20">
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th>Hospital Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Image</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% if len(hospitals) !=0 %}
+                {% for hospital in hospitals %}
+                {% set is_not_requested = get_is_not_requested_by_hospital_id_and_insurance_policy_id(hospital['_id'],insurance_policy_id) %}
+                {% if is_not_requested %}
+                    <tr>
+                        <td>{{hospital['hospital_name']}}</td>
+                        <td>{{hospital['email']}}</td>
+                        <td>{{hospital['phone']}}</td>
+                        <td><img src="../static/hospital_images/{{hospital['hospital_images']}}" style="height:100px"></td>
+                        <td>{{hospital['address']}}</td>
+                        <td>
+                            <a href="/link_new_hospitals2?hospital_id={{hospital['_id']}}&insurance_policy_id={{insurance_policy_id}}" class="btn btn-accept">Link</a>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+            {% else %}
+                <div class="text-center h2">No Hospitals to Link</div>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+</div>

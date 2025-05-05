@@ -1,0 +1,33 @@
+{% include 'ic_head.html' %}
+<div class="admin-bgr">
+    <h3 class="policy-card-title text-center">POLICIES LIST</h3>
+    <div class="row1 p-10">
+    {% for insurance_policy in insurance_policies %}
+    {% set insurance_company=get_insurance_company_name_by_insurance_companies_id(insurance_policy['insurance_companies_id']) %}
+        <div class="col-4">
+            <div class="policy-card p-20 m-20">
+                <div class="h2 text-center">{{insurance_policy['policy_name']}}</div>
+                    <div class="row1 mt-10 pl-10">
+                        <div class="col-6">Premium amount</div>
+                        <div class="col-6"> Premium cycle in months</div>
+                    </div>
+                    <div class="row1 pl-10">
+                        <div class="col-6 highlight">${{insurance_policy['premium_amount']}}</div>
+                        <div class="col-6 highlight">{{insurance_policy['premium_cycle_in_months']}}</div>
+                    </div>
+                    <div class="text-center mt-10 policy-info">{{insurance_policy['allowed_persons']}} family members are allowed</div>
+                    <div class="text-center mt-5 policy-info highlight"> You can claim upto $ {{insurance_policy['claim_amount']}} </div>
+                    <div class="pl-10"><a href="/linked_hospitals?insurance_policy_id={{insurance_policy['_id']}}">LINKED HOSPITALS</a></div>
+                    <div class="pl-10"><a href="/enrollments?insurance_policy_id={{insurance_policy['_id']}}">Enrollments</a></div>
+                    <div class="pl-10 mt-5 policy-info">Powered by : {{insurance_company['name']}}</div>
+                    <div class="about-policy pl-10">About Policy : {{insurance_policy['about_policy']}}</div>
+                    <div>
+                        <a href="/claim_request?insurance_policy_id={{insurance_policy['_id']}}" class="btn btn-primary">Claim requests</a>
+                    </div>
+                </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
